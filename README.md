@@ -4,11 +4,70 @@ SqlBulkTools features an easy to use fluent interface for performing SQL operati
 
 Please leave a Github star if you find this project useful.
 
-## Examples
-
 #### Getting started
 
-```dotnet add package SqlBulkTools.NetStandard --version 2.1.13```
+```dotnet add package SqlBulkTools.FSharp --version 0.2.0```
+
+## F# Computation Expressions!
+
+### Bulk Insert
+```fsharp
+bulkInsert conn {
+    for user in users do
+    table "Users"
+    column user.Id
+    column row.FirstName
+    column row.LastName
+    column row.SSN
+} 
+```
+
+### Bulk Update
+```fsharp
+bulkUpdate conn {
+    for row in rows do
+    table (nameof ctx.Dbo.Orders)
+    column row.Id
+    column row.OrderDate
+    column row.CustomerEmail
+    column row.CustomerAddress
+    column row.CustomerCity
+    column row.CustomerState
+    column row.CustomerZip
+    matchTargetOn row.Id
+}
+```
+
+### Bulk Upsert
+```fsharp
+bulkUpsert conn {
+    for row in rows do
+    table (nameof ctx.Dbo.Orders)
+    column row.Id
+    column row.OrderDate
+    column row.CustomerEmail
+    column row.CustomerAddress
+    column row.CustomerCity
+    column row.CustomerState
+    column row.CustomerZip
+    matchTargetOn row.Id
+}
+```
+
+### Bulk Delete
+```fsharp
+bulkDelete conn {
+    for sheet in deletedSheets do
+    table "Sheets"
+    column sheet.Id
+    matchTargetOn sheet.Id
+}
+```
+
+## Standard Library
+Of course you can use the previously existing fluent library (written in C#) if the F# builders don't meet your need (see below).
+
+## Examples
 
 -----------------------------
 ```c#
