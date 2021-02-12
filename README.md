@@ -14,14 +14,17 @@ Please leave a Github star if you find this project useful.
 
 ### Bulk Insert
 ```fsharp
-bulkInsert conn {
-    for user in users do
-    table "Users"
-    column user.Id
-    column row.FirstName
-    column row.LastName
-    column row.SSN
-} 
+use t = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
+let count =
+    bulkInsert conn {
+        for user in users do
+        table "Users"
+        column user.Id
+        column row.FirstName
+        column row.LastName
+        column row.SSN
+    } 
+if count > 0 then t.Complete()
 ```
 
 ### Bulk Update
