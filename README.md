@@ -10,6 +10,8 @@ Please leave a Github star if you find this project useful.
 
 ## F# Computation Expressions!
 
+```open SqlBulkTools.FSharp``` 
+
 ### Bulk Insert
 ```fsharp
 bulkInsert conn {
@@ -65,11 +67,10 @@ bulkDelete conn {
 ```
 
 ## Standard Library
-Of course you can use the previously existing fluent library (written in C#) if the F# builders don't meet your need (see below).
+You can use the underlying C# fluent API if the F# computation expression builders don't meet your needs:
 
-## Examples
+```open SqlBulkTools```
 
------------------------------
 ```c#
 using SqlBulkTools;
 
