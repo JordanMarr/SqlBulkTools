@@ -8,6 +8,14 @@ Please leave a Github star if you find this project useful.
 
 ```dotnet add package SqlBulkTools.FSharp --version 0.3.0```
 
+#### Installation
+Get it from NuGet!
+
+```dotnet add package SqlBulkTools.FSharp```
+
+[![NuGet version (SqlBulkTools.FSharp)](https://img.shields.io/nuget/v/SqlBulkTools.FSharp.svg?style=flat-square)](https://www.nuget.org/packages/SqlBulkTools.FSharp/)
+
+
 ## F# Computation Expressions!
 
 ```open SqlBulkTools.FSharp``` 
