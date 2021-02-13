@@ -10,6 +10,7 @@ type Operation<'T> =
     | OpForCollection of BulkForCollection<'T>
     | OpWithTable of BulkTable<'T>
     | OpAddColumn of BulkAddColumn<'T>
+    | OpInsert of BulkInsert<'T>
     | OpUpdate of BulkUpdate<'T>
     | OpUpsert of BulkInsertOrUpdate<'T>
     | OpDelete of BulkDelete<'T>
@@ -43,9 +44,16 @@ type BulkInsertBuilder(conn: IDbConnection) =
         | OpAddColumn bulk -> OpAddColumn (bulk.AddColumn(colExpr, destination))
         | _ -> failwith "Must add table first."
 
+    [<CustomOperation("identity", MaintainsVariableSpace=true)>]
+    member this.IdentityColumn (props, [<ProjectionParameter>] colExpr) =
+        match props with
+        | OpAddColumn bulk -> OpInsert (bulk.BulkInsert().SetIdentityColumn(colExpr))
+        | _ -> failwith "Must add columns first."
+
     member this.Run (props) =
         match props with
         | OpAddColumn bulk -> bulk.BulkInsert().Commit(conn)
+        | OpInsert bulk -> bulk.Commit(conn)
         | _ -> failwith "Must add at least one column first."
 
 /// A bulk insert will attempt to insert all records. If you have any unique constraints on columns, these must be respected. 
@@ -94,6 +102,13 @@ type BulkUpdateBuilder(conn: IDbConnection) =
         match props with
         | OpAddColumn bulk -> OpUpdate (bulk.BulkUpdate().UpdateWhen(filter))
         | OpUpdate bulk -> OpUpdate (bulk.UpdateWhen(filter))
+        | _ -> failwith "Must add columns first."
+
+    [<CustomOperation("identity", MaintainsVariableSpace=true)>]
+    member this.IdentityColumn (props, [<ProjectionParameter>] colExpr) =
+        match props with
+        | OpAddColumn bulk -> OpUpdate (bulk.BulkUpdate().SetIdentityColumn(colExpr))
+        | OpUpdate bulk -> OpUpdate (bulk.SetIdentityColumn(colExpr))
         | _ -> failwith "Must add columns first."
 
     member this.Run (props) =
@@ -149,6 +164,13 @@ type BulkUpsertBuilder(conn: IDbConnection) =
         | OpUpsert bulk -> OpUpsert (bulk.UpdateWhen(filter))
         | _ -> failwith "Must add columns first."
 
+    [<CustomOperation("identity", MaintainsVariableSpace=true)>]
+    member this.IdentityColumn (props, [<ProjectionParameter>] colExpr) =
+        match props with
+        | OpAddColumn bulk -> OpUpsert (bulk.BulkInsertOrUpdate().SetIdentityColumn(colExpr))
+        | OpUpsert bulk -> OpUpsert (bulk.SetIdentityColumn(colExpr))
+        | _ -> failwith "Must add columns first."
+
     member this.Run (props) =
         match props with
         | OpUpsert bulk -> bulk.Commit(conn)
@@ -202,6 +224,13 @@ type BulkDeleteBuilder(conn: IDbConnection) =
         match props with
         | OpAddColumn bulk -> OpDelete (bulk.BulkDelete().DeleteWhen(filter))
         | OpDelete bulk -> OpDelete (bulk.DeleteWhen(filter))
+        | _ -> failwith "Must add columns first."
+
+    [<CustomOperation("identity", MaintainsVariableSpace=true)>]
+    member this.IdentityColumn (props, [<ProjectionParameter>] colExpr) =
+        match props with
+        | OpAddColumn bulk -> OpDelete (bulk.BulkDelete().SetIdentityColumn(colExpr))
+        | OpDelete bulk -> OpDelete (bulk.SetIdentityColumn(colExpr))
         | _ -> failwith "Must add columns first."
 
     member this.Run (props) =
