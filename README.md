@@ -6,7 +6,7 @@ Please leave a Github star if you find this project useful.
 
 #### Getting started
 
-```dotnet add package SqlBulkTools.FSharp --version 0.2.0```
+```dotnet add package SqlBulkTools.FSharp --version 0.3.0```
 
 ## F# Computation Expressions!
 
