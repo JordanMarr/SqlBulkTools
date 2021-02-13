@@ -1,16 +1,79 @@
 <img src="http://gregnz.com/images/SqlBulkTools/icon-large.png" alt="SqlBulkTools">  [![Build Status](https://travis-ci.org/tiagorosendo/SqlBulkTools.svg?branch=master)](https://travis-ci.org/tiagorosendo/SqlBulkTools)
 
-SqlBulkTools features an easy to use fluent interface for performing SQL operations in c#. Supports Bulk Insert, Update, Delete and Merge. Includes advanced features such as output identity, delete entities conditionally (for merging), exclude column(s) from update (for merging), single entity operations and plenty more. 
+SqlBulkTools features an easy to use fluent interface for performing SQL operations in C# or F#. Supports Bulk Insert, Update, Delete and Merge. Includes advanced features such as output identity, delete entities conditionally (for merging), exclude column(s) from update (for merging), single entity operations and plenty more. 
 
 Please leave a Github star if you find this project useful.
 
-## Examples
-
 #### Getting started
 
-```dotnet add package SqlBulkTools.NetStandard --version 2.1.13```
+```dotnet add package SqlBulkTools.FSharp --version 0.2.0```
 
------------------------------
+## F# Computation Expressions!
+
+```open SqlBulkTools.FSharp``` 
+
+### Bulk Insert
+```fsharp
+use t = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled)
+let count =
+    bulkInsert conn {
+        for user in users do
+        table "Users"
+        column user.Id
+        column row.FirstName
+        column row.LastName
+        column row.SSN
+    } 
+if count > 0 then t.Complete()
+```
+
+### Bulk Update
+```fsharp
+bulkUpdate conn {
+    for row in rows do
+    table (nameof ctx.Dbo.Orders)
+    column row.Id
+    column row.OrderDate
+    column row.CustomerEmail
+    column row.CustomerAddress
+    column row.CustomerCity
+    column row.CustomerState
+    column row.CustomerZip
+    matchTargetOn row.Id
+}
+```
+
+### Bulk Upsert
+```fsharp
+bulkUpsert conn {
+    for row in rows do
+    table (nameof ctx.Dbo.Orders)
+    column row.Id
+    column row.OrderDate
+    column row.CustomerEmail
+    column row.CustomerAddress
+    column row.CustomerCity
+    column row.CustomerState
+    column row.CustomerZip
+    matchTargetOn row.Id
+}
+```
+
+### Bulk Delete
+```fsharp
+bulkDelete conn {
+    for sheet in deletedSheets do
+    table "Sheets"
+    column sheet.Id
+    matchTargetOn sheet.Id
+}
+```
+
+## Standard Library
+You can use the underlying C# fluent API if the F# computation expression builders don't meet your needs:
+
+```open SqlBulkTools```
+
 ```c#
 using SqlBulkTools;
 
