@@ -20,9 +20,10 @@ let count =
         for user in users do
         table "Users"
         column user.Id
-        column row.FirstName
-        column row.LastName
-        column row.SSN
+        columnMap user.FirstName "FName"
+        columnMap user.LastName "LName"
+        column user.SSN
+	identity user.Id
     } 
 if count > 0 then t.Complete()
 ```
