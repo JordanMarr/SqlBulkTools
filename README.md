@@ -5,9 +5,9 @@ SqlBulkTools features an easy to use fluent interface for performing SQL operati
 Please leave a Github star if you find this project useful.
 
 #### Installation
-```dotnet add package SqlBulkTools.FSharp```
-
 [![NuGet version (SqlBulkTools.FSharp)](https://img.shields.io/nuget/v/SqlBulkTools.FSharp.svg?style=flat-square)](https://www.nuget.org/packages/SqlBulkTools.FSharp/)
+
+```dotnet add package SqlBulkTools.FSharp```
 
 
 ## F# Computation Expressions!
