@@ -239,5 +239,5 @@ type BulkDeleteBuilder(conn: IDbConnection) =
         | _ -> failwith "Must add at least one column first."
 
 /// A bulk delete will delete records when matched. Consider using a DTO with only the needed information (e.g. PK) Notes: 
-/// (1) BulkUpdate requires at least one MatchTargetOn property to be configured.
+/// (1) BulkDelete requires at least one MatchTargetOn property to be configured.
 let bulkDelete conn = BulkDeleteBuilder(conn)
