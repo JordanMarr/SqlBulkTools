@@ -1,12 +1,10 @@
-<img src="http://gregnz.com/images/SqlBulkTools/icon-large.png" alt="SqlBulkTools">  [![Build Status](https://travis-ci.org/tiagorosendo/SqlBulkTools.svg?branch=master)](https://travis-ci.org/tiagorosendo/SqlBulkTools)
+<img src="http://gregnz.com/images/SqlBulkTools/icon-large.png" alt="SqlBulkTools">  
 
 SqlBulkTools features an easy to use fluent interface for performing SQL operations in C# or F#. Supports Bulk Insert, Update, Delete and Merge. Includes advanced features such as output identity, delete entities conditionally (for merging), exclude column(s) from update (for merging), single entity operations and plenty more. 
 
 Please leave a Github star if you find this project useful.
 
 #### Installation
-Get it from NuGet!
-
 ```dotnet add package SqlBulkTools.FSharp```
 
 [![NuGet version (SqlBulkTools.FSharp)](https://img.shields.io/nuget/v/SqlBulkTools.FSharp.svg?style=flat-square)](https://www.nuget.org/packages/SqlBulkTools.FSharp/)
