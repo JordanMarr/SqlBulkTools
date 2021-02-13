@@ -37,8 +37,8 @@ type BulkInsertBuilder(conn: IDbConnection) =
         | OpAddColumn bulk -> OpAddColumn (bulk.AddColumn(colExpr))
         | _ -> failwith "Must add table first."
 
-    [<CustomOperation("columnDest", MaintainsVariableSpace=true)>]
-    member this.ColumnDestination (props, [<ProjectionParameter>] colExpr, destination: string) =
+    [<CustomOperation("columnMap", MaintainsVariableSpace=true)>]
+    member this.ColumnMap (props, [<ProjectionParameter>] colExpr, destination: string) =
         match props with
         | OpWithTable bulk -> OpAddColumn (bulk.AddColumn(colExpr, destination))
         | OpAddColumn bulk -> OpAddColumn (bulk.AddColumn(colExpr, destination))
@@ -83,8 +83,8 @@ type BulkUpdateBuilder(conn: IDbConnection) =
         | OpAddColumn bulk -> OpAddColumn (bulk.AddColumn(colExpr))
         | _ -> failwith "Must add table first."
 
-    [<CustomOperation("columnDest", MaintainsVariableSpace=true)>]
-    member this.ColumnDestination (props, [<ProjectionParameter>] colExpr, destination: string) =
+    [<CustomOperation("columnMap", MaintainsVariableSpace=true)>]
+    member this.ColumnMap (props, [<ProjectionParameter>] colExpr, destination: string) =
         match props with
         | OpWithTable bulk -> OpAddColumn (bulk.AddColumn(colExpr, destination))
         | OpAddColumn bulk -> OpAddColumn (bulk.AddColumn(colExpr, destination))
@@ -143,8 +143,8 @@ type BulkUpsertBuilder(conn: IDbConnection) =
         | OpAddColumn bulk -> OpAddColumn (bulk.AddColumn(colExpr))
         | _ -> failwith "Must add table first."
 
-    [<CustomOperation("columnDest", MaintainsVariableSpace=true)>]
-    member this.ColumnDestination (props, [<ProjectionParameter>] colExpr, destination: string) =
+    [<CustomOperation("columnMap", MaintainsVariableSpace=true)>]
+    member this.ColumnMap (props, [<ProjectionParameter>] colExpr, destination: string) =
         match props with
         | OpWithTable bulk -> OpAddColumn (bulk.AddColumn(colExpr, destination))
         | OpAddColumn bulk -> OpAddColumn (bulk.AddColumn(colExpr, destination))
@@ -205,8 +205,8 @@ type BulkDeleteBuilder(conn: IDbConnection) =
         | OpAddColumn bulk -> OpAddColumn (bulk.AddColumn(colExpr))
         | _ -> failwith "Must add table first."
 
-    [<CustomOperation("columnDest", MaintainsVariableSpace=true)>]
-    member this.ColumnDestination (props, [<ProjectionParameter>] colExpr, destination: string) =
+    [<CustomOperation("columnMap", MaintainsVariableSpace=true)>]
+    member this.ColumnMap (props, [<ProjectionParameter>] colExpr, destination: string) =
         match props with
         | OpWithTable bulk -> OpAddColumn (bulk.AddColumn(colExpr, destination))
         | OpAddColumn bulk -> OpAddColumn (bulk.AddColumn(colExpr, destination))
